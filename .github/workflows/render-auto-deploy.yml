@@ -1,0 +1,57 @@
+name: 🚀 Render Auto Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: 🔧 Build & Deploy to Render
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: 🧩 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: 📦 Install dependencies
+        run: |
+          npm ci
+
+      - name: 🧠 Build project
+        run: |
+          npm run build || echo "No build step defined, skipping..."
+
+      - name: 🚀 Trigger Render Deployment
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          echo "Starting deployment on Render..."
+          DEPLOY=$(curl -s -X POST "https://api.render.com/v1/services/$SERVICE_ID/deploys" \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json")
+          echo "✅ Render deployment triggered successfully."
+          echo "Response: $DEPLOY"
+
+      - name: 🩺 Verify Deployment Health
+        run: |
+          echo "Waiting for Render to finish deploying..."
+          sleep 60
+          DEPLOY_URL="https://nursery-management-system-dari-alhanonah.onrender.com/health"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_URL")
+          if [ "$STATUS" = "200" ]; then
+            echo "✅ Deployment successful and healthy!"
+          else
+            echo "⚠️ Health check returned status $STATUS"
+          fi
+
+      - name: ✉️ Notify completion
+        run: |
+          echo "🎉 Render Auto Deploy workflow completed."

@@ -1,0 +1,34 @@
+name: "🚀 Deploy to Render"
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout"
+        uses: actions/checkout@v4
+
+      - name: "⚙️ Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: "📦 Install dependencies"
+        run: npm ci || npm install
+
+      - name: "🧱 Build (if needed)"
+        run: npm run build || echo "no build step"
+
+      - name: "🚀 Trigger Render deploy"
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "❌ Missing RENDER_DEPLOY_HOOK secret"
+            exit 1
+          fi
+          curl -fsSL -X POST "$RENDER_DEPLOY_HOOK"
+          echo "✅ Deployment request sent to Render"

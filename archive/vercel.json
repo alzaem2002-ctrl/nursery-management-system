@@ -1,0 +1,64 @@
+{
+  "version": 2,
+  "name": "smart-integrated-system",
+  "builds": [
+    { 
+      "src": "server.js", 
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "server.js",
+          "package.json",
+          "public/**",
+          ".qa/**"
+        ],
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ],
+  "routes": [
+    { 
+      "src": "/favicon.ico", 
+      "dest": "/public/favicon.ico",
+      "headers": {
+        "Cache-Control": "public, max-age=86400, immutable"
+      }
+    },
+    { 
+      "src": "/favicon.svg", 
+      "dest": "/public/favicon.svg",
+      "headers": {
+        "Cache-Control": "public, max-age=86400, immutable",
+        "Content-Type": "image/svg+xml"
+      }
+    },
+    { 
+      "src": "/manifest.json", 
+      "dest": "/public/manifest.json",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    { 
+      "src": "/icons/(.*)", 
+      "dest": "/public/icons/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=86400, immutable"
+      }
+    },
+    { 
+      "src": "/(.*)", 
+      "dest": "server.js",
+      "headers": {
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+      }
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "regions": ["iad1"],
+  "public": true
+}

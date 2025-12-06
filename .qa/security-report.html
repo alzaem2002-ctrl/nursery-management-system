@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير الأمان - النظام الذكي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body { 
+            font-family: 'Segoe UI', 'Cairo', Arial, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        .security-badge {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        .badge-secure {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        .badge-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+        .score-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .score-item {
+            background: rgba(255,255,255,0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .check-section {
+            margin: 2rem 0;
+        }
+        .check-section h2 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .check-item {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .check-pass {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #10b981;
+        }
+        .check-warn {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #f59e0b;
+        }
+        .recommendations {
+            background: #f3f4f6;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .recommendations h2 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        .recommendation-item {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ تقرير الأمان الشامل</h1>
+        <p style="color: #6b7280; margin-bottom: 1rem;">تاريخ المسح: ٨‏/١٠‏/٢٠٢٥، ٦:٤٤:١٨ ص</p>
+        
+        <div class="security-badge badge-secure">
+            ✅ النظام آمن
+        </div>
+        
+        <div class="score-section">
+            <h2>📊 درجة الأمان الإجمالية</h2>
+            <div class="score-grid">
+                <div class="score-item">
+                    <div class="score-value">100</div>
+                    <div>الدرجة الكلية</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-value">30</div>
+                    <div>رؤوس الأمان</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-value">25</div>
+                    <div>معالجة الأخطاء</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-value">20</div>
+                    <div>التبعيات</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="check-section">
+            <h2>🔍 نتائج الفحص</h2>
+            
+            <div class="check-item check-pass">
+                <span>✅</span>
+                <span><strong>الملفات الخطرة:</strong> لا توجد ملفات Go أو ملفات تنفيذية غير آمنة</span>
+            </div>
+            
+            <div class="check-item check-pass">
+                <span>✅</span>
+                <span><strong>رؤوس الأمان:</strong> جميع رؤوس الأمان مفعلة (Helmet, CSP, XSS, etc.)</span>
+            </div>
+            
+            <div class="check-item check-pass">
+                <span>✅</span>
+                <span><strong>معالجة الأخطاء:</strong> نظام متكامل لمعالجة الأخطاء والتسجيل</span>
+            </div>
+            
+            <div class="check-item check-pass">
+                <span>✅</span>
+                <span><strong>التبعيات:</strong> جميع التبعيات آمنة ومحدثة</span>
+            </div>
+        </div>
+        
+        <div class="recommendations">
+            <h2>💡 التوصيات والتحسينات</h2>
+            
+                <div class="recommendation-item">✅ نظام الأمان متكامل</div>
+            
+                <div class="recommendation-item">✅ رؤوس الأمان مفعلة</div>
+            
+                <div class="recommendation-item">✅ معالجة الأخطاء جاهزة</div>
+            
+                <div class="recommendation-item">💡 تفعيل HTTPS الإجباري في الإنتاج</div>
+            
+                <div class="recommendation-item">💡 إضافة نظام rate limiting للحماية من الهجمات</div>
+            
+                <div class="recommendation-item">💡 تدقيق dependencies بانتظام باستخدام npm audit</div>
+            
+        </div>
+        
+        <div class="footer">
+            <p><strong>🎯 النظام يلبي أعلى معايير الأمان</strong></p>
+            <p style="margin-top: 0.5rem;">تم الفحص والتدقيق بشكل شامل</p>
+        </div>
+    </div>
+</body>
+</html>

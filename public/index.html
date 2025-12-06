@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>داري الحنونة الأهلية لضيافة الأطفال</title>
+    
+    <!-- TailwindCSS (Local Build) -->
+    <link rel="stylesheet" href="/static/output.css?v=1.0">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Meta tags -->
+    <meta name="description" content="مركز داري الحنونة الأهلية لضيافة الأطفال - أكبر مركز ضيافة أطفال في الأحساء ومعتمد رسمياً من وزارة الموارد البشرية والتنمية الاجتماعية">
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="/manifest.json">
+    
+    <style>
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: #f1f5f9; }
+      ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+      
+      body { font-family: 'Cairo', sans-serif; }
+      
+      .fade-in { animation: fadeIn 0.5s ease-in; }
+      .slide-in { animation: slideIn 0.3s ease-out; }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3b82f6;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      
+      .gradient-nursery {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+      }
+      
+      /* Print Styles */
+      @media print {
+        /* Hide non-printable elements */
+        button, .no-print, #loading-screen, #loading-overlay, #toast-container {
+          display: none !important;
+        }
+        
+        /* Show only the content */
+        body {
+          background: white;
+          color: black;
+        }
+        
+        /* Header adjustments for print */
+        header {
+          background: white !important;
+          color: black !important;
+          border-bottom: 2px solid #333;
+          padding: 20px 0 !important;
+        }
+        
+        header h1 {
+          color: black !important;
+          font-size: 24pt;
+        }
+        
+        /* Table styling for print */
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          page-break-inside: auto;
+        }
+        
+        table thead {
+          display: table-header-group;
+        }
+        
+        table tr {
+          page-break-inside: avoid;
+          page-break-after: auto;
+        }
+        
+        table th, table td {
+          border: 1px solid #333;
+          padding: 8px;
+          font-size: 10pt;
+        }
+        
+        table th {
+          background-color: #f0f0f0 !important;
+          font-weight: bold;
+        }
+        
+        /* Card styling for print */
+        .print-card {
+          border: 1px solid #333;
+          padding: 10px;
+          margin-bottom: 10px;
+          page-break-inside: avoid;
+        }
+        
+        /* Chart container for print */
+        canvas {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+        
+        /* Page margins */
+        @page {
+          margin: 2cm;
+          size: A4;
+        }
+        
+        /* Add print header */
+        .print-header {
+          display: block !important;
+          text-align: center;
+          margin-bottom: 20px;
+          border-bottom: 2px solid #333;
+          padding-bottom: 10px;
+        }
+        
+        .print-date {
+          display: block !important;
+          text-align: left;
+          font-size: 10pt;
+          margin-bottom: 10px;
+        }
+      }
+      
+      .print-header, .print-date {
+        display: none;
+      }
+      
+      /* Responsive Charts for Mobile */
+      @media (max-width: 768px) {
+        .chart-container {
+          height: 200px !important;
+        }
+        
+        .grid.grid-cols-1.lg\\:grid-cols-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      /* Optimize charts for print */
+      @media print {
+        .chart-container {
+          height: 300px !important;
+          page-break-inside: avoid;
+        }
+        
+        canvas {
+          max-height: 300px !important;
+        }
+      }
+    </style>
+  </head>
+  
+  <body class="bg-slate-50 antialiased">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 bg-white z-50 flex items-center justify-center transition-opacity duration-300">
+      <div class="text-center">
+        <div class="spinner mb-4 mx-auto"></div>
+        <h2 class="text-xl font-bold text-gray-800 mb-2">داري الحنونة الأهلية</h2>
+        <p class="text-gray-600">جاري التحميل...</p>
+      </div>
+    </div>
+    
+    <!-- Loading Overlay (for operations) -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden items-center justify-center">
+      <div class="bg-white p-8 rounded-lg text-center">
+        <div class="spinner mb-4 mx-auto"></div>
+        <p class="text-gray-700">جاري المعالجة...</p>
+      </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 left-4 z-50 space-y-2"></div>
+    
+    <!-- HTML App Container -->
+    <div id="html-app" class="hidden min-h-screen bg-slate-50">
+      
+      <!-- ========== Login Page ========== -->
+      <div id="login-page" class="hidden min-h-screen flex items-center justify-center gradient-nursery">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md fade-in">
+          <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">🏫 داري الحنونة الأهلية</h1>
+            <p class="text-gray-600">لضيافة الأطفال - الأحساء</p>
+            <p class="text-sm text-gray-500 mt-1">📍 الهفوف - السلمانية الشمالية</p>
+            <p class="text-sm text-gray-500">📞 0546425459</p>
+          </div>
+          
+          <form id="login-form" class="space-y-6">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
+              <input type="email" id="email" name="email" autocomplete="email"
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                     placeholder="admin@nursery.com" required>
+            </div>
+            
+            <div>
+              <label for="password" class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور</label>
+              <input type="password" id="password" name="password" autocomplete="current-password"
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                     placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" 
+                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-200 font-medium">
+              تسجيل الدخول
+            </button>
+          </form>
+          
+          <!-- Staff Accounts - Quick Access -->
+          <div class="mt-8 border-t pt-6">
+            <p class="text-center font-semibold text-gray-700 mb-4">🔑 الوصول السريع - اضغط على الحساب للدخول:</p>
+            
+            <!-- Management Section -->
+            <div class="mb-4">
+              <p class="text-xs font-semibold text-purple-600 mb-2">👑 الإدارة</p>
+              <div class="grid grid-cols-1 gap-2">
+                <button type="button" onclick="fillLogin('manayer.alzaid@dari-alhanona.sa', 'manayer2025')" 
+                        class="text-left px-3 py-2 bg-purple-50 hover:bg-purple-100 rounded-lg border border-purple-200 transition">
+                  <div class="text-xs font-medium text-purple-900">مناير خالد سعد الزيد</div>
+                  <div class="text-xs text-purple-600 font-mono">مديرة المركز</div>
+                </button>
+                <button type="button" onclick="fillLogin('nada.almubairik@dari-alhanona.sa', 'nada2025')" 
+                        class="text-left px-3 py-2 bg-purple-50 hover:bg-purple-100 rounded-lg border border-purple-200 transition">
+                  <div class="text-xs font-medium text-purple-900">ندى عبدالرحمن المبيريك</div>
+                  <div class="text-xs text-purple-600 font-mono">إدارة القبول والتسجيل</div>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Teachers Section -->
+            <div class="mb-4">
+              <p class="text-xs font-semibold text-blue-600 mb-2">👩‍🏫 الكادر التعليمي</p>
+              <div class="grid grid-cols-1 gap-2">
+                <button type="button" onclick="fillLogin('sabah.altaher@dari-alhanona.sa', 'sabah2025')" 
+                        class="text-left px-3 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                  <div class="text-xs font-medium text-blue-900">صباح الطاهر</div>
+                  <div class="text-xs text-blue-600">NURSERY (0-3 سنوات)</div>
+                </button>
+                <button type="button" onclick="fillLogin('latifa.alsaif@dari-alhanona.sa', 'latifa2025')" 
+                        class="text-left px-3 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                  <div class="text-xs font-medium text-blue-900">لطيفة السيف</div>
+                  <div class="text-xs text-blue-600">BRI KG (3-4 سنوات)</div>
+                </button>
+                <button type="button" onclick="fillLogin('eman.alnuwiser@dari-alhanona.sa', 'eman2025')" 
+                        class="text-left px-3 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                  <div class="text-xs font-medium text-blue-900">إيمان النويصر</div>
+                  <div class="text-xs text-blue-600">KG1 (4-5 سنوات)</div>
+                </button>
+                <button type="button" onclick="fillLogin('majd.khaled@dari-alhanona.sa', 'majd2025')" 
+                        class="text-left px-3 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                  <div class="text-xs font-medium text-blue-900">مجد خالد</div>
+                  <div class="text-xs text-blue-600">KG2 (5-6 سنوات)</div>
+                </button>
+                <button type="button" onclick="fillLogin('shahad.alzaid@dari-alhanona.sa', 'shahad2025')" 
+                        class="text-left px-3 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                  <div class="text-xs font-medium text-blue-900">شهد الزيد</div>
+                  <div class="text-xs text-blue-600">KG3 (+6 سنوات)</div>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Support Staff Section -->
+            <div>
+              <p class="text-xs font-semibold text-green-600 mb-2">🧹 الكادر المساعد</p>
+              <button type="button" onclick="fillLogin('wejdan.alhowidi@dari-alhanona.sa', 'wejdan2025')" 
+                      class="w-full text-left px-3 py-2 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition">
+                <div class="text-xs font-medium text-green-900">وجدان الهويدي</div>
+                <div class="text-xs text-green-600">مسؤولة النظافة</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ========== Dashboard ========== -->
+      <div id="dashboard" class="hidden">
+        <!-- Header -->
+        <header class="gradient-bg text-white shadow-lg">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+              <div>
+                <h1 class="text-2xl font-bold">🏫 داري الحنونة الأهلية</h1>
+                <p class="text-sm text-white text-opacity-90">لضيافة الأطفال - الأحساء</p>
+              </div>
+              <div class="flex items-center space-x-4 space-x-reverse">
+                <span id="user-name" class="text-sm">مرحباً، المدير</span>
+                <button id="logout-btn" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                  تسجيل الخروج
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+              <div class="flex items-center">
+                <div class="p-3 bg-blue-100 rounded-full">
+                  <i class="fas fa-users text-blue-600 text-2xl"></i>
+                </div>
+                <div class="mr-4">
+                  <p class="text-sm font-medium text-gray-600">إجمالي الأطفال</p>
+                  <p id="total-children" class="text-2xl font-bold text-gray-900">0</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+              <div class="flex items-center">
+                <div class="p-3 bg-green-100 rounded-full">
+                  <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                </div>
+                <div class="mr-4">
+                  <p class="text-sm font-medium text-gray-600">الحاضرين اليوم</p>
+                  <p id="present-today" class="text-2xl font-bold text-gray-900">0</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+              <div class="flex items-center">
+                <div class="p-3 bg-purple-100 rounded-full">
+                  <i class="fas fa-user-tie text-purple-600 text-2xl"></i>
+                </div>
+                <div class="mr-4">
+                  <p class="text-sm font-medium text-gray-600">الكادر التعليمي</p>
+                  <p id="total-staff" class="text-2xl font-bold text-gray-900">0</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+              <div class="flex items-center">
+                <div class="p-3 bg-yellow-100 rounded-full">
+                  <i class="fas fa-palette text-yellow-600 text-2xl"></i>
+                </div>
+                <div class="mr-4">
+                  <p class="text-sm font-medium text-gray-600">الأنشطة اليوم</p>
+                  <p id="activities-today" class="text-2xl font-bold text-gray-900">0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <button onclick="window.nurseryApp?.showChildrenManagement()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">👶 إدارة الأطفال</h3>
+                  <p class="text-gray-600 text-sm mt-1">إضافة وتعديل بيانات الأطفال</p>
+                </div>
+                <div class="bg-blue-100 p-3 rounded-full">
+                  <i class="fas fa-users text-blue-600 text-2xl"></i>
+                </div>
+              </div>
+            </button>
+            
+            <button onclick="window.nurseryApp?.loadAttendance()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">✅ نظام الحضور</h3>
+                  <p class="text-gray-600 text-sm mt-1">تسجيل حضور وانصراف الأطفال</p>
+                </div>
+                <div class="bg-green-100 p-3 rounded-full">
+                  <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                </div>
+              </div>
+            </button>
+            
+            <button onclick="window.nurseryApp?.loadAssessments()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">⭐ التقييمات</h3>
+                  <p class="text-gray-600 text-sm mt-1">نظام تقييم متطور حسب العمر</p>
+                </div>
+                <div class="bg-purple-100 p-3 rounded-full">
+                  <i class="fas fa-star text-purple-600 text-2xl"></i>
+                </div>
+              </div>
+            </button>
+            
+            <button onclick="window.nurseryApp?.loadActivities()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">🎨 الأنشطة</h3>
+                  <p class="text-gray-600 text-sm mt-1">إدارة الأنشطة التعليمية</p>
+                </div>
+                <div class="bg-indigo-100 p-3 rounded-full">
+                  <i class="fas fa-palette text-indigo-600 text-2xl"></i>
+                </div>
+              </div>
+            </button>
+            
+            <button onclick="window.nurseryApp?.loadUsers()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right" id="users-management-btn">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">👥 إدارة الموظفين</h3>
+                  <p class="text-gray-600 text-sm mt-1">إضافة موظفين وإعطاء الصلاحيات</p>
+                </div>
+                <div class="bg-orange-100 p-3 rounded-full">
+                  <i class="fas fa-user-tie text-orange-600 text-2xl"></i>
+                </div>
+              </div>
+            </button>
+            
+            <button onclick="window.nurseryApp?.loadReports()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">📊 التقارير والإحصائيات</h3>
+                  <p class="text-gray-600 text-sm mt-1">رسوم بيانية وتحليلات شاملة</p>
+                </div>
+                <div class="bg-teal-100 p-3 rounded-full">
+                  <i class="fas fa-chart-bar text-teal-600 text-2xl"></i>
+                </div>
+              </div>
+            </button>
+          </div>
+        </main>
+      </div>
+      
+      <!-- ========== Children Management ========== -->
+      <div id="children-management" class="hidden">
+        <!-- Header -->
+        <header class="gradient-bg text-white shadow-lg">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+              <div class="flex items-center">
+                <button id="back-to-dashboard" class="bg-white bg-opacity-20 px-3 py-2 rounded-lg hover:bg-opacity-30 transition ml-4">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1 class="text-2xl font-bold">👶 إدارة الأطفال</h1>
+              </div>
+              <div class="flex gap-2">
+                <button id="print-children-btn" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                  <i class="fas fa-print ml-2"></i>
+                  طباعة القائمة
+                </button>
+                <button id="logout-btn-2" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                  تسجيل الخروج
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          
+          <!-- Children List Section -->
+          <div id="children-list-section">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+              <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-900">قائمة الأطفال</h2>
+                <button id="add-child-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                  <i class="fas fa-plus ml-2"></i>
+                  إضافة طفل جديد
+                </button>
+              </div>
+              
+              <!-- Search -->
+              <div class="mb-4">
+                <input type="text" id="search-child" 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                       placeholder="🔍 ابحث عن طفل...">
+              </div>
+              
+              <!-- Table -->
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">#</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">الاسم</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">العمر</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">ولي الأمر</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">الهاتف</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">إجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="children-table-body" class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                        <div class="spinner mx-auto mb-2"></div>
+                        <div>جاري التحميل...</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Child Form Section (Hidden by default) -->
+          <div id="child-form-section" class="hidden">
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <h2 class="text-xl font-bold text-gray-900 mb-6">بيانات الطفل</h2>
+              
+              <form id="child-form" class="space-y-6">
+                <input type="hidden" id="child-id">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">اسم الطفل</label>
+                    <input type="text" id="child-name" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">العمر</label>
+                    <input type="number" id="child-age" required min="1" max="10"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                  </div>
+                  
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">اسم ولي الأمر</label>
+                    <input type="text" id="parent-name"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">رقم الهاتف</label>
+                    <input type="tel" id="parent-phone"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
+                    <input type="email" id="parent-email" autocomplete="email"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">العنوان</label>
+                  <textarea id="address" rows="2"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">ملاحظات طبية</label>
+                  <textarea id="medical-notes" rows="3"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                
+                <div class="flex gap-4">
+                  <button type="submit" class="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                    <i class="fas fa-save ml-2"></i>
+                    حفظ
+                  </button>
+                  <button type="button" id="cancel-add-child" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-400 transition">
+                    <i class="fas fa-times ml-2"></i>
+                    إلغاء
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+        </main>
+      </div>
+      
+      <!-- ========== Users Management ========== -->
+      <div id="users-management" class="hidden">
+        <!-- Header -->
+        <header class="gradient-bg text-white shadow-lg">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+              <div class="flex items-center">
+                <button id="back-to-dashboard-users" class="bg-white bg-opacity-20 px-3 py-2 rounded-lg hover:bg-opacity-30 transition ml-4">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1 class="text-2xl font-bold">👥 إدارة الموظفين</h1>
+              </div>
+              <button id="logout-btn-users" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                تسجيل الخروج
+              </button>
+            </div>
+          </div>
+        </header>
+        
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="mb-6 flex justify-between items-center">
+            <h2 class="text-2xl font-bold text-gray-800">قائمة الموظفين</h2>
+            <button id="add-user-btn" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+              <i class="fas fa-plus ml-2"></i>
+              إضافة موظف
+            </button>
+          </div>
+          
+          <!-- Users List -->
+          <div id="users-list" class="bg-white rounded-xl shadow-md p-6">
+            <div class="grid gap-4">
+              <!-- Users will be loaded here dynamically -->
+            </div>
+          </div>
+          
+          <!-- Add/Edit User Form -->
+          <div id="user-form-container" class="hidden bg-white rounded-xl shadow-md p-6 mt-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-6" id="user-form-title">إضافة موظف جديد</h3>
+            <form id="user-form" class="space-y-6">
+              <input type="hidden" id="user-id">
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">الاسم الكامل *</label>
+                  <input type="text" id="user-name" required
+                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني *</label>
+                  <input type="email" id="user-email" autocomplete="email" required
+                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور *</label>
+                  <input type="password" id="user-password" autocomplete="new-password" required
+                         placeholder="8 أحرف على الأقل"
+                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">الصلاحية *</label>
+                  <select id="user-role" required
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <option value="staff">موظف عادي (Staff)</option>
+                    <option value="admin">مدير (Admin)</option>
+                    <option value="parent">ولي أمر (Parent)</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="flex gap-4">
+                <button type="submit" class="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                  <i class="fas fa-save ml-2"></i>
+                  حفظ
+                </button>
+                <button type="button" id="cancel-user-form" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-400 transition">
+                  <i class="fas fa-times ml-2"></i>
+                  إلغاء
+                </button>
+              </div>
+            </form>
+          </div>
+        </main>
+      </div>
+      
+      <!-- ========== Attendance View ========== -->
+      <div id="attendance-view" class="hidden">
+        <header class="gradient-bg text-white shadow-lg">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+              <div class="flex items-center">
+                <button id="back-to-dashboard-attendance" class="bg-white bg-opacity-20 px-3 py-2 rounded-lg hover:bg-opacity-30 transition ml-4">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1 class="text-2xl font-bold">✅ نظام الحضور</h1>
+              </div>
+              <div class="flex gap-2">
+                <button id="print-attendance-btn" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                  <i class="fas fa-print ml-2"></i>
+                  طباعة الكشف
+                </button>
+                <button id="logout-btn-attendance" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                  تسجيل الخروج
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">📊 سجلات الحضور</h2>
+            <div id="attendance-list" class="overflow-x-auto">
+              <!-- Attendance data will be loaded here -->
+            </div>
+          </div>
+        </main>
+      </div>
+      
+      <!-- ========== Assessments View ========== -->
+      <div id="assessments-view" class="hidden">
+        <header class="gradient-bg text-white shadow-lg">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+              <div class="flex items-center">
+                <button id="back-to-dashboard-assessments" class="bg-white bg-opacity-20 px-3 py-2 rounded-lg hover:bg-opacity-30 transition ml-4">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1 class="text-2xl font-bold">⭐ التقييمات</h1>
+              </div>
+              <button id="logout-btn-assessments" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                تسجيل الخروج
+              </button>
+            </div>
+          </div>
+        </header>
+        
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">⭐ تقييمات الأطفال</h2>
+            <div id="assessments-list" class="grid gap-4">
+              <!-- Assessments data will be loaded here -->
+            </div>
+          </div>
+        </main>
+      </div>
+      
+      <!-- ========== Activities View ========== -->
+      <div id="activities-view" class="hidden">
+        <header class="gradient-bg text-white shadow-lg">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+              <div class="flex items-center">
+                <button id="back-to-dashboard-activities" class="bg-white bg-opacity-20 px-3 py-2 rounded-lg hover:bg-opacity-30 transition ml-4">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1 class="text-2xl font-bold">🎨 الأنشطة</h1>
+              </div>
+              <button id="logout-btn-activities" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                تسجيل الخروج
+              </button>
+            </div>
+          </div>
+        </header>
+        
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">🎨 الأنشطة التعليمية</h2>
+            <div id="activities-list" class="grid gap-4">
+              <!-- Activities data will be loaded here -->
+            </div>
+          </div>
+        </main>
+      </div>
+      
+      <!-- ========== Reports View ========== -->
+      <div id="reports-view" class="hidden">
+        <header class="gradient-bg text-white shadow-lg">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+              <div class="flex items-center">
+                <button id="back-to-dashboard-reports" class="bg-white bg-opacity-20 px-3 py-2 rounded-lg hover:bg-opacity-30 transition ml-4">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1 class="text-2xl font-bold">📊 التقارير والإحصائيات</h1>
+              </div>
+              <div class="flex gap-2">
+                <button id="print-reports-btn" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                  <i class="fas fa-print ml-2"></i>
+                  طباعة التقرير
+                </button>
+                <button id="logout-btn-reports" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                  تسجيل الخروج
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <!-- Statistics Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-blue-100 text-sm mb-1">إجمالي الأطفال</p>
+                  <p id="report-total-children" class="text-3xl font-bold">0</p>
+                </div>
+                <div class="bg-white bg-opacity-20 p-3 rounded-full">
+                  <i class="fas fa-users text-2xl"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-green-100 text-sm mb-1">الحضور اليوم</p>
+                  <p id="report-present-today" class="text-3xl font-bold">0</p>
+                </div>
+                <div class="bg-white bg-opacity-20 p-3 rounded-full">
+                  <i class="fas fa-check-circle text-2xl"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-purple-100 text-sm mb-1">التقييمات</p>
+                  <p id="report-assessments-count" class="text-3xl font-bold">0</p>
+                </div>
+                <div class="bg-white bg-opacity-20 p-3 rounded-full">
+                  <i class="fas fa-star text-2xl"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg p-6 text-white">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-orange-100 text-sm mb-1">الأنشطة</p>
+                  <p id="report-activities-count" class="text-3xl font-bold">0</p>
+                </div>
+                <div class="bg-white bg-opacity-20 p-3 rounded-full">
+                  <i class="fas fa-palette text-2xl"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Charts -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Attendance Chart -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <h3 class="text-xl font-bold text-gray-800 mb-4">📈 الحضور خلال الأسبوع</h3>
+              <div class="chart-container" style="position: relative; height: 250px;">
+                <canvas id="attendanceChart"></canvas>
+              </div>
+            </div>
+            
+            <!-- Assessment Types Chart -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <h3 class="text-xl font-bold text-gray-800 mb-4">⭐ أنواع التقييمات</h3>
+              <div class="chart-container" style="position: relative; height: 250px;">
+                <canvas id="assessmentTypesChart"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Activity Types Chart -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <h3 class="text-xl font-bold text-gray-800 mb-4">🎨 أنواع الأنشطة</h3>
+              <div class="chart-container" style="position: relative; height: 250px;">
+                <canvas id="activityTypesChart"></canvas>
+              </div>
+            </div>
+            
+            <!-- Age Distribution Chart -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <h3 class="text-xl font-bold text-gray-800 mb-4">👶 توزيع الأعمار</h3>
+              <div class="chart-container" style="position: relative; height: 250px;">
+                <canvas id="ageDistributionChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      
+    </div>
+    
+    <!-- Scripts: Chart.js for Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Scripts: Load API Client first, then App -->
+    <script src="/static/api.js?v=1.2"></script>
+    <script src="/static/app.js?v=1.8"></script>
+  </body>
+</html>

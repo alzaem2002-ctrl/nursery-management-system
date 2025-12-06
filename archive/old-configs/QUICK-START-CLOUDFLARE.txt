@@ -1,0 +1,78 @@
+════════════════════════════════════════════════════════════════════
+  🚀 CLOUDFLARE TUNNEL QUICK START - بدء سريع لنفق Cloudflare
+════════════════════════════════════════════════════════════════════
+
+📌 TUNNEL INFO:
+   Name:     nursery-prod
+   ID:       9686c0be-c797-4d66-ada2-26f088f8f9c8
+   URL:      https://nursery.dari-system.com
+
+════════════════════════════════════════════════════════════════════
+
+🔧 ESSENTIAL COMMANDS:
+
+   Start tunnel:
+   $ ./run-cloudflare-tunnel.sh
+
+   Start in background:
+   $ nohup ./run-cloudflare-tunnel.sh > /dev/null 2>&1 &
+
+   View logs:
+   $ tail -f /opt/nursery-runtime/logs/cloudflared.log
+
+   Stop tunnel:
+   $ pkill cloudflared
+
+   Check if running:
+   $ ps aux | grep cloudflared
+
+════════════════════════════════════════════════════════════════════
+
+⚠️  BEFORE FIRST USE - DNS SETUP REQUIRED:
+
+1. Go to: https://dash.cloudflare.com/
+2. Select domain: dari-system.com (or add it)
+3. DNS > Records > Add record:
+   
+   Type:     CNAME
+   Name:     nursery
+   Target:   9686c0be-c797-4d66-ada2-26f088f8f9c8.cfargotunnel.com
+   Proxy:    ON (orange cloud)
+
+════════════════════════════════════════════════════════════════════
+
+✅ VERIFICATION STEPS:
+
+1. Ensure local app runs on port 3001:
+   $ curl http://localhost:3001
+
+2. Start tunnel:
+   $ ./run-cloudflare-tunnel.sh
+
+3. Wait 30 seconds for DNS propagation
+
+4. Test public URL:
+   $ curl https://nursery.dari-system.com
+
+════════════════════════════════════════════════════════════════════
+
+🔐 CREDENTIALS LOCATION:
+   Config:  ~/.cloudflared/config.yml
+   Creds:   ~/.cloudflared/nursery-prod.json
+
+════════════════════════════════════════════════════════════════════
+
+📚 FULL DOCUMENTATION:
+   - README-CLOUDFLARE-TUNNEL.md
+   - CLOUDFLARE-SETUP-SUMMARY.md
+
+════════════════════════════════════════════════════════════════════
+
+💡 PRO TIPS:
+
+   • Keep tunnel running: Use systemd on production servers
+   • Check status: curl the API endpoint (see README)
+   • Monitor logs: tail -f /opt/nursery-runtime/logs/cloudflared.log
+   • Backup credentials: ~/.cloudflared/nursery-prod.json
+
+════════════════════════════════════════════════════════════════════

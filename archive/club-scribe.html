@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدوّن النادي (Club Scribe)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .break-before-page { break-before: page; }
+        @media print {
+            body { background: #fff !important; color: #000 !important; }
+            .bg-gray-900, .bg-gray-800 { background: #fff !important; }
+            .text-white, .text-gray-400, .text-gray-300 { color: #000 !important; }
+            #localModeNotification, #loadingState, #errorAlert, #successAlert { display: none !important; }
+            button, .no-print, [class*="fa-"] { display: none !important; }
+            input, textarea { border: 1px solid #000 !important; background: #fff !important; color: #000 !important; }
+            img { filter: none !important; }
+            a { color: #000 !important; text-decoration: underline; }
+            @page { margin: 12mm; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Local AI Notification -->
+    <div id="localModeNotification" class="fixed top-4 right-4 z-50 bg-green-600 text-white p-4 rounded-lg shadow-lg max-w-sm hidden">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">🤖</span>
+            <div>
+                <div class="font-bold text-sm">نظام تحليل محلي ذكي</div>
+                <div class="text-xs opacity-90">يعمل بدون إنترنت أو API</div>
+            </div>
+            <button onclick="app.hideNotification()" class="text-white hover:text-gray-200 ml-2">✕</button>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div class="bg-gray-800 p-8 rounded-xl text-center max-w-md w-full mx-4">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <h3 class="text-xl font-bold mb-2" id="loadingTitle">جاري تحليل الملف</h3>
+            <p class="text-gray-300 mb-4" id="loadingMessage">قد تستغرق العملية بضع دقائق...</p>
+            <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
+                <div id="loadingProgress" class="bg-blue-500 h-2 rounded-full progress-bar" style="width: 0%"></div>
+            </div>
+            <p class="text-sm text-gray-400" id="loadingPercentage">0%</p>
+        </div>
+    </div>
+
+    <!-- Error Alert -->
+    <div id="errorAlert" class="hidden fixed top-4 left-4 right-4 bg-red-600 text-white p-4 rounded-lg shadow-lg z-50">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-exclamation-triangle text-xl"></i>
+                <span id="errorMessage">حدث خطأ غير معروف</span>
+            </div>
+            <button onclick="app.hideError()" class="text-white hover:text-gray-200 text-xl">✕</button>
+        </div>
+    </div>
+
+    <!-- Success Alert -->
+    <div id="successAlert" class="hidden fixed top-4 left-4 right-4 bg-green-600 text-white p-4 rounded-lg shadow-lg z-50">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-check-circle text-xl"></i>
+                <span id="successMessage">تمت العملية بنجاح</span>
+            </div>
+            <button onclick="app.hideSuccess()" class="text-white hover:text-gray-200 text-xl">✕</button>
+        </div>
+    </div>
+
+    <div class="min-h-screen bg-gray-900 text-white">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center gap-3">
+                <svg class="w-8 h-8 text-blue-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="currentColor" strokeWidth="2" strokeMiterlimit="10"></path>
+                    <path d="M8 11.5303L10.5303 14.0607C10.7256 14.2559 11.0422 14.2559 11.2374 14.0607L16 9.29809" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                </svg>
+                <h1 class="text-xl font-bold tracking-wider">مدوّن النادي</h1>
+                <div class="flex items-center gap-2 ml-auto">
+                    <button onclick="app.showUploadView('video')" class="text-xs bg-green-700 hover:bg-green-600 px-2 py-1 rounded transition-colors flex items-center gap-1" title="رفع ملف فيديو">
+                        <i class="fas fa-video w-3 h-3"></i>
+                        فيديو
+                    </button>
+                    <button onclick="app.showUploadView('audio')" class="text-xs bg-purple-700 hover:bg-purple-600 px-2 py-1 rounded transition-colors flex items-center gap-1" title="رفع ملف صوتي">
+                        <i class="fas fa-microphone w-3 h-3"></i>
+                        صوت
+                    </button>
+                    <button onclick="app.showLocalModeInfo" class="text-xs bg-gray-700 hover:bg-gray-600 px-2 py-1 rounded transition-colors" title="نظام التحليل المحلي">
+                        🤖 محلي
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <main id="mainContent" class="container mx-auto px-4 py-6">
+            <!-- سيتم تحميل المحتوى الديناميكي هنا -->
+        </main>
+    </div>
+
+    <!-- تضمين ملفات JavaScript -->
+    <script src="js/errorHandler.js"></script>
+    <script src="js/fileProcessor.js"></script>
+    <script src="js/reportGenerator.js"></script>
+    <script src="js/localAnalyzer.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            app.init();
+        });
+    </script>
+</body>
+</html>

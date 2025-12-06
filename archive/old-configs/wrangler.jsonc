@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nursery-management-system",
+  "compatibility_date": "2025-09-05",
+  "pages_build_output_dir": "./dist",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  // D1 Database configuration for nursery management system
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nursery-db",
+      "database_id": "nursery-local-db"
+    }
+  ],
+  // Production environment variables
+  "vars": {
+    "NODE_ENV": "production"
+  }
+}

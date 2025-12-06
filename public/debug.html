@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔍 اختبار الأيقونات</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 min-h-screen p-4">
+  <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-6">
+    <h1 class="text-3xl font-bold text-center mb-6">🔍 اختبار الأيقونات</h1>
+    
+    <div id="login-section" class="mb-6">
+      <h2 class="text-xl font-semibold mb-4">1️⃣ تسجيل الدخول أولاً:</h2>
+      <button onclick="testLogin()" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+        🔐 تسجيل الدخول (admin@nursery.com)
+      </button>
+    </div>
+    
+    <div id="buttons-section" class="mb-6 hidden">
+      <h2 class="text-xl font-semibold mb-4">2️⃣ اختبار الأيقونات:</h2>
+      
+      <button onclick="testButton('إدارة الأطفال', 'showChildrenManagement')" 
+              class="w-full bg-blue-500 text-white py-3 rounded-lg mb-3 hover:bg-blue-600 transition text-lg">
+        👶 إدارة الأطفال
+      </button>
+      
+      <button onclick="testButton('نظام الحضور', 'loadAttendance')" 
+              class="w-full bg-green-500 text-white py-3 rounded-lg mb-3 hover:bg-green-600 transition text-lg">
+        ✅ نظام الحضور
+      </button>
+      
+      <button onclick="testButton('التقييمات', 'loadAssessments')" 
+              class="w-full bg-purple-500 text-white py-3 rounded-lg mb-3 hover:bg-purple-600 transition text-lg">
+        ⭐ التقييمات
+      </button>
+      
+      <button onclick="testButton('الأنشطة', 'loadActivities')" 
+              class="w-full bg-indigo-500 text-white py-3 rounded-lg mb-3 hover:bg-indigo-600 transition text-lg">
+        🎨 الأنشطة
+      </button>
+      
+      <button onclick="testButton('إدارة الموظفين', 'loadUsers')" 
+              class="w-full bg-orange-500 text-white py-3 rounded-lg mb-3 hover:bg-orange-600 transition text-lg">
+        👥 إدارة الموظفين
+      </button>
+    </div>
+    
+    <div class="bg-gray-100 rounded-lg p-4 mt-6">
+      <h3 class="font-semibold mb-2">📋 سجل الاختبار:</h3>
+      <div id="log" class="text-sm space-y-2 max-h-96 overflow-y-auto"></div>
+    </div>
+  </div>
+  
+  <script src="/static/api.js"></script>
+  <script src="/static/app.js"></script>
+  <script>
+    function addLog(message, type = 'info') {
+      const log = document.getElementById('log');
+      const colors = {
+        success: 'text-green-600',
+        error: 'text-red-600',
+        warning: 'text-yellow-600',
+        info: 'text-blue-600'
+      };
+      
+      const time = new Date().toLocaleTimeString('ar-SA');
+      const entry = document.createElement('div');
+      entry.className = `p-2 rounded ${colors[type]} bg-white`;
+      entry.textContent = `[${time}] ${message}`;
+      log.insertBefore(entry, log.firstChild);
+    }
+    
+    async function testLogin() {
+      addLog('⏳ جاري تسجيل الدخول...', 'info');
+      
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            email: 'admin@nursery.com',
+            password: 'admin123'
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          addLog(`✅ تسجيل الدخول نجح! المستخدم: ${data.data.user.name}`, 'success');
+          document.getElementById('login-section').classList.add('hidden');
+          document.getElementById('buttons-section').classList.remove('hidden');
+          
+          // Check if window.nurseryApp exists
+          if (typeof window.nurseryApp !== 'undefined') {
+            addLog('✅ window.nurseryApp موجود', 'success');
+          } else {
+            addLog('❌ window.nurseryApp غير موجود!', 'error');
+          }
+        } else {
+          addLog(`❌ فشل تسجيل الدخول: ${data.error}`, 'error');
+        }
+      } catch (error) {
+        addLog(`❌ خطأ: ${error.message}`, 'error');
+      }
+    }
+    
+    function testButton(name, funcName) {
+      addLog(`⏳ اختبار ${name}...`, 'info');
+      
+      try {
+        if (typeof window.nurseryApp === 'undefined') {
+          addLog('❌ window.nurseryApp غير موجود!', 'error');
+          return;
+        }
+        
+        if (typeof window.nurseryApp[funcName] !== 'function') {
+          addLog(`❌ الدالة ${funcName} غير موجودة!`, 'error');
+          return;
+        }
+        
+        addLog(`✅ الدالة ${funcName} موجودة، جاري الاستدعاء...`, 'success');
+        
+        // Call the function
+        window.nurseryApp[funcName]();
+        
+        addLog(`✅ تم استدعاء ${funcName} بنجاح!`, 'success');
+        
+        // Check after 1 second
+        setTimeout(() => {
+          addLog(`ℹ️ تحقق من الصفحة الرئيسية لرؤية النتيجة`, 'info');
+        }, 1000);
+        
+      } catch (error) {
+        addLog(`❌ خطأ: ${error.message}`, 'error');
+        console.error('Full error:', error);
+      }
+    }
+    
+    addLog('🚀 صفحة الاختبار جاهزة', 'info');
+  </script>
+</body>
+</html>

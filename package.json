@@ -1,0 +1,67 @@
+{
+  "name": "smart-integrated-system",
+  "version": "2.0.0",
+  "description": "نظام متكامل ذكي بتقنيات حديثة مع أمان ومراقبة متقدمة",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "NODE_ENV=production PORT=5000 node server.js",
+    "dev": "NODE_ENV=development PORT=5000 node server.js",
+    "build": "npm run build:css",
+    "build:css": "npx tailwindcss -i ./public/static/input.css -o ./public/static/output.css --minify",
+    "watch:css": "npx tailwindcss -i ./public/static/input.css -o ./public/static/output.css --watch",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:seed": "node server/seed.js",
+    "test": "node .qa/run-tests.js",
+    "test:security": "node .qa/security-audit.js",
+    "test:visual": "node .qa/full-visual-qa.js",
+    "test:performance": "npx autocannon -c 10 -d 10 http://localhost:5000/health",
+    "test:all": "npm run test && npm run test:security && npm run test:visual",
+    "audit": "npm audit --audit-level=moderate",
+    "quality-check": "node .qa/run-tests.js && node .qa/security-audit.js"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.1.0",
+    "@neondatabase/serverless": "^0.10.4",
+    "autocannon": "^8.0.0",
+    "autoprefixer": "^10.4.21",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cssnano": "^7.1.1",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.5",
+    "drizzle-orm": "^0.44.6",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "postcss": "^8.5.6",
+    "ws": "^8.18.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "smart-system",
+    "production-ready",
+    "security",
+    "monitoring",
+    "icons",
+    "pwa",
+    "express",
+    "nodejs"
+  ],
+  "author": "Smart System Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/smart-integrated-system"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.26.0",
+    "tailwindcss": "^3.4.18"
+  }
+}

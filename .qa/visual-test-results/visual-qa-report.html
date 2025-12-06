@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual QA Report - ٢٢‏/١٠‏/٢٠٢٥، ٨:١٥:٤١ ص</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        .stat-card p {
+            opacity: 0.9;
+        }
+        .test-item {
+            background: #f9fafb;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .test-item.passed { border-left-color: #10b981; }
+        .test-item.failed { border-left-color: #ef4444; }
+        .test-item.warning { border-left-color: #f59e0b; }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .status.passed { background: #10b981; color: white; }
+        .status.failed { background: #ef4444; color: white; }
+        .status.warning { background: #f59e0b; color: white; }
+        .metrics {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .metrics dt {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 10px;
+        }
+        .metrics dd {
+            margin-right: 20px;
+            color: #666;
+        }
+        .issues {
+            background: #fef2f2;
+            border-left: 3px solid #ef4444;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+        .issues li {
+            color: #991b1b;
+            margin-right: 20px;
+        }
+        .screenshot {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .timestamp {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 تقرير الاختبار البصري الشامل</h1>
+        <p class="timestamp">📅 ٢٢‏/١٠‏/٢٠٢٥، ٨:١٥:٤١ ص</p>
+        
+        <div class="summary">
+            <div class="stat-card">
+                <h3>10</h3>
+                <p>إجمالي الاختبارات</p>
+            </div>
+            <div class="stat-card">
+                <h3>10</h3>
+                <p>نجح ✓</p>
+            </div>
+            <div class="stat-card">
+                <h3>0</h3>
+                <p>فشل ✗</p>
+            </div>
+            <div class="stat-card">
+                <h3>0</h3>
+                <p>تحذيرات ⚠</p>
+            </div>
+            <div class="stat-card">
+                <h3>100.0%</h3>
+                <p>معدل النجاح</p>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 40px; color: #667eea;">📋 تفاصيل الاختبارات</h2>
+        
+        
+            <div class="test-item passed">
+                <h3>
+                    homepage 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /</p>
+                <p><strong>النوع:</strong> html</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>loadTime:</dt>
+                                <dd>974ms</dd>
+                            
+                                <dt>statusCode:</dt>
+                                <dd>200</dd>
+                            
+                                <dt>pageTitle:</dt>
+                                <dd>نظام إدارة دار الحنونة للحضانة - المطور v2.0</dd>
+                            
+                                <dt>totalLinks:</dt>
+                                <dd>0</dd>
+                            
+                                <dt>totalImages:</dt>
+                                <dd>0</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                    <img src="../screenshots/homepage.png" class="screenshot" alt="Screenshot of homepage">
+                
+                
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    health-check 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /health</p>
+                <p><strong>النوع:</strong> json</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>loadTime:</dt>
+                                <dd>1307ms</dd>
+                            
+                                <dt>statusCode:</dt>
+                                <dd>200</dd>
+                            
+                                <dt>jsonValid:</dt>
+                                <dd>true</dd>
+                            
+                                <dt>jsonKeys:</dt>
+                                <dd>7</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                
+                
+                    <div class="metrics">
+                        <strong>📄 JSON Preview:</strong>
+                        <pre>{
+  "status": "healthy",
+  "timestamp": "2025-10-22T08:15:47.880Z",
+  "version": "2.0.0",
+  "environment": "development",
+  "services": {
+    "web_server": {
+      "status": "up",
+      "response_time...</pre>
+                    </div>
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    api-docs 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /api</p>
+                <p><strong>النوع:</strong> json</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>loadTime:</dt>
+                                <dd>1247ms</dd>
+                            
+                                <dt>statusCode:</dt>
+                                <dd>200</dd>
+                            
+                                <dt>jsonValid:</dt>
+                                <dd>true</dd>
+                            
+                                <dt>jsonKeys:</dt>
+                                <dd>5</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                
+                
+                    <div class="metrics">
+                        <strong>📄 JSON Preview:</strong>
+                        <pre>{
+  "api_version": "2.0.0",
+  "documentation": "/docs/api",
+  "base_url": "https://988b435b-b9cf-41ec-a197-c13d5cfb5902-00-3aezwjsyet5vd.riker.replit.dev",
+  "endpoints": {
+    "health": {
+      "meth...</pre>
+                    </div>
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    reports 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /reports</p>
+                <p><strong>النوع:</strong> json</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>loadTime:</dt>
+                                <dd>1371ms</dd>
+                            
+                                <dt>statusCode:</dt>
+                                <dd>200</dd>
+                            
+                                <dt>jsonValid:</dt>
+                                <dd>true</dd>
+                            
+                                <dt>jsonKeys:</dt>
+                                <dd>7</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                
+                
+                    <div class="metrics">
+                        <strong>📄 JSON Preview:</strong>
+                        <pre>{
+  "report": "أداء النظام",
+  "period": "منذ بدء التشغيل",
+  "total_requests": 5,
+  "average_response_time": "45ms",
+  "success_rate": "99.8%",
+  "icon_health": "excellent",
+  "recent_requests": [
+  ...</pre>
+                    </div>
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    manifest 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /manifest.json</p>
+                <p><strong>النوع:</strong> json</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>loadTime:</dt>
+                                <dd>1355ms</dd>
+                            
+                                <dt>statusCode:</dt>
+                                <dd>200</dd>
+                            
+                                <dt>jsonValid:</dt>
+                                <dd>true</dd>
+                            
+                                <dt>jsonKeys:</dt>
+                                <dd>13</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                
+                
+                    <div class="metrics">
+                        <strong>📄 JSON Preview:</strong>
+                        <pre>{
+  "name": "نظام إدارة دار الحنونة للحضانة",
+  "short_name": "دار الحنونة",
+  "description": "نظام شامل لإدارة الحضانات مع دعم كامل للعربية",
+  "start_url": "/",
+  "display": "standalone",
+  "backgro...</pre>
+                    </div>
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    favicon-svg 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /favicon.svg</p>
+                <p><strong>النوع:</strong> image</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>loadTime:</dt>
+                                <dd>2252ms</dd>
+                            
+                                <dt>statusCode:</dt>
+                                <dd>200</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    icon-192 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /icons/icon-192x192.svg</p>
+                <p><strong>النوع:</strong> image</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>loadTime:</dt>
+                                <dd>2412ms</dd>
+                            
+                                <dt>statusCode:</dt>
+                                <dd>200</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    security-headers 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /</p>
+                <p><strong>النوع:</strong> security</p>
+                
+                
+                
+                
+                
+                
+                
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    accessibility 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /</p>
+                <p><strong>النوع:</strong> a11y</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>hasLangAttr:</dt>
+                                <dd>true</dd>
+                            
+                                <dt>hasDoctype:</dt>
+                                <dd>true</dd>
+                            
+                                <dt>imagesWithoutAlt:</dt>
+                                <dd>0</dd>
+                            
+                                <dt>linksWithoutText:</dt>
+                                <dd>0</dd>
+                            
+                                <dt>headingStructure:</dt>
+                                <dd>[{"tag":"h1","count":2},{"tag":"h2","count":1},{"tag":"h3","count":6},{"tag":"h4","count":0},{"tag":"h5","count":0},{"tag":"h6","count":0}]</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                
+                
+            </div>
+        
+            <div class="test-item passed">
+                <h3>
+                    performance 
+                    <span class="status passed">PASSED</span>
+                </h3>
+                <p><strong>النقطة:</strong> /</p>
+                <p><strong>النوع:</strong> performance</p>
+                
+                
+                    <div class="metrics">
+                        <strong>📊 المقاييس:</strong>
+                        <dl>
+                            
+                                <dt>domContentLoaded:</dt>
+                                <dd>306</dd>
+                            
+                                <dt>pageLoad:</dt>
+                                <dd>381</dd>
+                            
+                                <dt>domReady:</dt>
+                                <dd>97</dd>
+                            
+                                <dt>responseTime:</dt>
+                                <dd>4</dd>
+                            
+                        </dl>
+                    </div>
+                
+                
+                
+                
+                
+                
+                
+            </div>
+        
+    </div>
+</body>
+</html>
+    

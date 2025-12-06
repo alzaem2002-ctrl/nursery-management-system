@@ -1,0 +1,31 @@
+name = "nursery-management-system"
+compatibility_date = "2025-09-05"
+compatibility_flags = ["nodejs_compat"]
+
+# Pages configuration
+pages_build_output_dir = "./dist"
+
+# Production environment variables
+[env.production.vars]
+NODE_ENV = "production"
+JWT_SECRET = "super-secure-jwt-secret-for-production-change-this"
+
+# D1 Database configuration
+[[d1_databases]]
+binding = "DB"
+database_name = "nursery-db"
+database_id = "your-production-database-id-here"  # سيتم تحديثه بعد إنشاء DB
+
+# Production D1 Database
+[env.production]
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "nursery-db-production"
+database_id = "your-production-database-id-here"  # سيتم تحديثه
+
+# Development settings (local)
+[env.development]
+[[env.development.d1_databases]]
+binding = "DB"
+database_name = "nursery-db"
+database_id = "nursery-local-db"

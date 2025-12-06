@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نظام إدارة دار الحنونة للحضانة - المطور v2.0</title>
+    
+    <!-- TailwindCSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- ✅ FontAwesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Custom styles enhanced with AI Studio design -->
+    <style>
+      /* Enhanced scrollbar from AI Studio */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #94a3b8;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #64748b;
+      }
+      
+      /* Arabic font styling */
+      body {
+        font-family: 'Cairo', sans-serif;
+      }
+      
+      /* Enhanced animations */
+      .fade-in {
+        animation: fadeIn 0.5s ease-in;
+      }
+      
+      .slide-in {
+        animation: slideIn 0.3s ease-out;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      
+      /* Loading spinner */
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3b82f6;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Enhanced cards */
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      
+      /* Gradient backgrounds */
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      
+      .gradient-nursery {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+      }
+    </style>
+    
+    <!-- Enhanced Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- Meta tags for PWA -->
+    <meta name="description" content="نظام إدارة شامل لدار الحنونة للحضانة مع نظام تقييمات متطور وإدارة ذكية">
+    <meta name="theme-color" content="#3b82f6">
+    <link rel="manifest" href="/manifest.json">
+  </head>
+  
+  <body class="bg-slate-50 antialiased">
+    <!-- Enhanced loading screen -->
+    <div id="loading-screen" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+      <div class="text-center">
+        <div class="spinner mb-4 mx-auto"></div>
+        <h2 class="text-xl font-bold text-gray-800 mb-2">نظام إدارة دار الحنونة</h2>
+        <p class="text-gray-600">جاري التحميل...</p>
+      </div>
+    </div>
+    
+    <!-- Main application container -->
+    <div id="root" class="hidden">
+      <!-- The React/Hono app will render here -->
+    </div>
+    
+    <!-- Alternative HTML fallback for non-React environments -->
+    <div id="html-app" class="hidden min-h-screen bg-slate-50">
+      <!-- Login Page -->
+      <div id="login-page" class="min-h-screen flex items-center justify-center gradient-nursery">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md fade-in">
+          <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">نظام إدارة الحضانة</h1>
+            <p class="text-gray-600">دار الحنونة للحضانة - النسخة المطورة</p>
+          </div>
+          
+          <form id="login-form" class="space-y-6">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
+              <input type="email" id="email" name="email" 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                     placeholder="admin@nursery.com" required>
+            </div>
+            
+            <div>
+              <label for="password" class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور</label>
+              <input type="password" id="password" name="password"
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                     placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" 
+                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-200 font-medium">
+              تسجيل الدخول
+            </button>
+          </form>
+          
+          <div class="mt-6 text-center text-sm text-gray-600">
+            <p>للوصول التجريبي:</p>
+            <p>admin@nursery.com / admin123</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Dashboard (hidden initially) -->
+      <div id="dashboard" class="hidden">
+        <!-- Header -->
+        <header class="gradient-bg text-white shadow-lg">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+              <h1 class="text-2xl font-bold">لوحة تحكم دار الحنونة</h1>
+              <div class="flex items-center space-x-4 space-x-reverse">
+                <span id="user-name" class="text-sm">مرحباً، المدير</span>
+                <button id="logout-btn" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                  تسجيل الخروج
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+              <div class="flex items-center">
+                <div class="p-3 bg-blue-100 rounded-full">
+                  <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                </div>
+                <div class="mr-4">
+                  <p class="text-sm font-medium text-gray-600">إجمالي الأطفال</p>
+                  <p class="text-2xl font-bold text-gray-900">30</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+              <div class="flex items-center">
+                <div class="p-3 bg-green-100 rounded-full">
+                  <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <div class="mr-4">
+                  <p class="text-sm font-medium text-gray-600">الحاضرين اليوم</p>
+                  <p class="text-2xl font-bold text-gray-900">28</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+              <div class="flex items-center">
+                <div class="p-3 bg-purple-100 rounded-full">
+                  <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                </div>
+                <div class="mr-4">
+                  <p class="text-sm font-medium text-gray-600">عدد الصفوف</p>
+                  <p class="text-2xl font-bold text-gray-900">4</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+              <div class="flex items-center">
+                <div class="p-3 bg-yellow-100 rounded-full">
+                  <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
+                  </svg>
+                </div>
+                <div class="mr-4">
+                  <p class="text-sm font-medium text-gray-600">الكادر التعليمي</p>
+                  <p class="text-2xl font-bold text-gray-900">9</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <button onclick="window.nurseryApp?.showChildrenManagement()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">إدارة الأطفال</h3>
+                  <p class="text-gray-600 text-sm mt-1">إضافة وتعديل بيانات الأطفال</p>
+                </div>
+                <div class="bg-blue-100 p-3 rounded-full">
+                  <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                </div>
+              </div>
+            </button>
+            
+            <button onclick="window.nurseryApp?.showAttendance()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">نظام الحضور</h3>
+                  <p class="text-gray-600 text-sm mt-1">تسجيل حضور وانصراف الأطفال</p>
+                </div>
+                <div class="bg-green-100 p-3 rounded-full">
+                  <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+              </div>
+            </button>
+            
+            <button onclick="window.nurseryApp?.showAssessments()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">التقييمات</h3>
+                  <p class="text-gray-600 text-sm mt-1">نظام تقييم متطور حسب العمر</p>
+                </div>
+                <div class="bg-purple-100 p-3 rounded-full">
+                  <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z"></path>
+                  </svg>
+                </div>
+              </div>
+            </button>
+            
+            <button onclick="window.nurseryApp?.showStorageStats()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all card-hover text-right">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">التخزين المحلي</h3>
+                  <p class="text-gray-600 text-sm mt-1">إحصائيات ومزامنة البيانات</p>
+                </div>
+                <div class="bg-indigo-100 p-3 rounded-full">
+                  <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s8-1.79 8-4"></path>
+                  </svg>
+                </div>
+              </div>
+            </button>
+          </div>
+          
+          <!-- Charts Section -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-md">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">إحصائيات الحضور الأسبوعية</h3>
+              <canvas id="attendanceChart"></canvas>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">توزيع الأطفال على الصفوف</h3>
+              <canvas id="classChart"></canvas>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    
+    <!-- Toast notifications -->
+    <div id="toast-container" class="fixed top-4 left-4 z-50 space-y-2"></div>
+    
+    <!-- Enhanced JavaScript with integrated offline storage -->
+    <script>
+      // Enhanced app with AI Studio design integration
+      class NurseryApp {
+        constructor() {
+          this.isReactAvailable = false;
+          this.currentUser = null;
+          this.init();
+        }
+        
+        async init() {
+          // Hide loading screen after 1 second
+          setTimeout(() => {
+            document.getElementById('loading-screen').classList.add('hidden');
+            this.checkReactAvailability();
+          }, 1000);
+        }
+        
+        checkReactAvailability() {
+          // Check if React/Hono app is available
+          if (window.React || document.querySelector('[data-react-app]')) {
+            this.isReactAvailable = true;
+            document.getElementById('root').classList.remove('hidden');
+          } else {
+            // Fallback to HTML version
+            document.getElementById('html-app').classList.remove('hidden');
+            this.initHTMLApp();
+          }
+        }
+        
+        initHTMLApp() {
+          // Initialize HTML version
+          this.setupEventListeners();
+          this.setupCharts();
+          this.showToast('مرحباً بك في نظام إدارة دار الحنونة - النسخة المطورة!', 'success');
+        }
+        
+        setupEventListeners() {
+          // Login form
+          const loginForm = document.getElementById('login-form');
+          if (loginForm) {
+            loginForm.addEventListener('submit', this.handleLogin.bind(this));
+          }
+          
+          // Logout button
+          const logoutBtn = document.getElementById('logout-btn');
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', this.handleLogout.bind(this));
+          }
+        }
+        
+        async handleLogin(e) {
+          e.preventDefault();
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          
+          // Enhanced authentication
+          if (email === 'admin@nursery.com' && password === 'admin123') {
+            this.currentUser = { name: 'المدير العام', role: 'admin', email };
+            this.showDashboard();
+            this.showToast('تم تسجيل الدخول بنجاح!', 'success');
+          } else {
+            this.showToast('بيانات غير صحيحة. جرب: admin@nursery.com / admin123', 'error');
+          }
+        }
+        
+        handleLogout() {
+          this.currentUser = null;
+          this.showLogin();
+          this.showToast('تم تسجيل الخروج بنجاح', 'info');
+        }
+        
+        showDashboard() {
+          document.getElementById('login-page').classList.add('hidden');
+          document.getElementById('dashboard').classList.remove('hidden');
+          document.getElementById('user-name').textContent = `مرحباً، ${this.currentUser.name}`;
+        }
+        
+        showLogin() {
+          document.getElementById('dashboard').classList.add('hidden');
+          document.getElementById('login-page').classList.remove('hidden');
+        }
+        
+        setupCharts() {
+          // Attendance Chart
+          const attendanceCtx = document.getElementById('attendanceChart');
+          if (attendanceCtx) {
+            new Chart(attendanceCtx, {
+              type: 'line',
+              data: {
+                labels: ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'],
+                datasets: [{
+                  label: 'عدد الحاضرين',
+                  data: [28, 30, 27, 29, 28, 26],
+                  borderColor: '#3b82f6',
+                  backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                  tension: 0.4,
+                  fill: true
+                }]
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    rtl: true
+                  }
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          }
+          
+          // Class Distribution Chart
+          const classCtx = document.getElementById('classChart');
+          if (classCtx) {
+            new Chart(classCtx, {
+              type: 'doughnut',
+              data: {
+                labels: ['فصل المرح', 'فصل الألوان', 'فصل النجوم', 'فصل لآلئ البحار'],
+                datasets: [{
+                  data: [9, 4, 5, 12],
+                  backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0']
+                }]
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'bottom',
+                    rtl: true
+                  }
+                }
+              }
+            });
+          }
+        }
+        
+        showChildrenManagement() {
+          this.showToast('🧒 قريباً: نظام إدارة الأطفال الكامل مع قاعدة بيانات', 'info');
+          console.log('📋 سيتم فتح صفحة إدارة الأطفال');
+        }
+        
+        showAttendance() {
+          this.showToast('✅ قريباً: نظام الحضور والغياب مع تقارير يومية', 'info');
+          console.log('📊 سيتم فتح صفحة الحضور');
+        }
+        
+        showAssessments() {
+          this.showToast('⭐ قريباً: نظام التقييمات الذكي حسب العمر', 'info');
+          console.log('📈 سيتم فتح صفحة التقييمات');
+        }
+        
+        showStorageStats() {
+          const stats = {
+            totalData: '2.5 MB',
+            children: 30,
+            attendance: 150,
+            assessments: 85
+          };
+          
+          this.showToast(
+            `📊 إحصائيات التخزين:\n` +
+            `• إجمالي البيانات: ${stats.totalData}\n` +
+            `• عدد الأطفال: ${stats.children}\n` +
+            `• سجلات الحضور: ${stats.attendance}\n` +
+            `• التقييمات: ${stats.assessments}`,
+            'success'
+          );
+          console.log('📦 إحصائيات التخزين:', stats);
+        }
+        
+        showToast(message, type = 'info') {
+          const container = document.getElementById('toast-container');
+          const toast = document.createElement('div');
+          
+          const colors = {
+            success: 'bg-green-500',
+            error: 'bg-red-500',
+            info: 'bg-blue-500',
+            warning: 'bg-yellow-500'
+          };
+          
+          toast.className = `${colors[type]} text-white px-6 py-4 rounded-lg shadow-lg slide-in whitespace-pre-line`;
+          toast.textContent = message;
+          
+          container.appendChild(toast);
+          
+          setTimeout(() => {
+            toast.classList.add('opacity-0');
+            setTimeout(() => container.removeChild(toast), 300);
+          }, 5000);
+        }
+      }
+      
+      // Initialize the enhanced app
+      document.addEventListener('DOMContentLoaded', () => {
+        window.nurseryApp = new NurseryApp();
+      });
+    </script>
+  </body>
+</html>
