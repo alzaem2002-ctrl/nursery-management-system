@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: nursery-management-system
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build:css
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nursery-postgres-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+
+databases:
+  - name: nursery-postgres-db
+    plan: free
+    databaseName: nursery_db
+    user: nursery_user
